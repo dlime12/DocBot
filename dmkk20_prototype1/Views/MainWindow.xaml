@@ -1,0 +1,98 @@
+﻿<Window x:Class="dmkk20_prototype1.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dmkk20_prototype1"
+        mc:Ignorable="d"
+        Title="DocBot" Height="650" Width="1300">
+    <Grid Margin="0,0,25,25">
+        <TextBox Name ="DirectoryInput" HorizontalAlignment="Left" Height="37" Margin="42,68,0,0" TextWrapping="Wrap" Text="C:\Users" VerticalAlignment="Top" Width="264" TextChanged="Directory_TextChanged"/>
+        <Label x:Name="directory" Content="*Base Directory:" HorizontalAlignment="Left" Margin="42,35,0,0" VerticalAlignment="Top" Height="26" Width="212" FontFamily="Calibri" />
+        <Button Content="Browse" HorizontalAlignment="Left" Margin="332,68,0,0" VerticalAlignment="Top" Width="90" Height="37" Click="Browse_Click"/>
+        <Button Content="Search" HorizontalAlignment="Left" Margin="195,501,0,0" VerticalAlignment="Top" Width="90" Height="30" Click="Search_Click" RenderTransformOrigin="0.564,5.043"/>
+        <Button Content="Replace" HorizontalAlignment="Left" Margin="331,501,0,0" VerticalAlignment="Top" Width="91" Height="30" Click="Replace_Click"/>
+        <Label Content="Results:" HorizontalAlignment="Left" Margin="440,35,0,0" VerticalAlignment="Top" Height="26" Width="50"/>
+        <Label x:Name="resultsLabel" Content="" HorizontalAlignment="Left" Margin="490,35,0,0" VerticalAlignment="Top" Height="26" Width="514"/>
+
+
+        <DataGrid x:Name="resultTable" HorizontalAlignment="Left" Height="482" Margin="440,68,0,0" VerticalAlignment="Top" Width="787" AutoGenerateColumns="False" CanUserAddRows = "False">
+
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Header="Apply Change" Binding="{Binding ApplyChanges, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header = "File Name" IsReadOnly="True" Binding = "{Binding FileNames}"/>
+                <DataGridTextColumn Header = "Directory Name" IsReadOnly="True" Binding = "{Binding DirectoryNames}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TabControl HorizontalAlignment="Left" Height="360" Margin="42,125,0,0" VerticalAlignment="Top" Width="380">
+            <TabItem Header="Body Change">
+                <ScrollViewer HorizontalAlignment="Left" Height="336" Margin="0,-2,0,0" VerticalAlignment="Top" Width="374">
+                    <Canvas HorizontalAlignment="Left" Tag="Body" VerticalAlignment="Top" Width="351" Height="336">
+                        <TextBox HorizontalAlignment="Left" Tag="1" Height="30" TextWrapping="Wrap" Text="Old text" VerticalAlignment="Top" Width="158" TextChanged="Search_TextChanged" Canvas.Top="10" Canvas.Left="6"/>
+                        <TextBox HorizontalAlignment="Left" Tag="1" Height="30" TextWrapping="Wrap" Text="New text" VerticalAlignment="Top" Width="158" TextChanged="Replace_TextChanged" Canvas.Left="183" Canvas.Top="10"/>
+                        <Button HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="91" Canvas.Top="55" Click="AddReplaceFields_Click" Canvas.Left="6">
+                            <Button.Content>
+                                <TextBlock TextWrapping="Wrap" Text="Add More Changes"/>
+                            </Button.Content>
+                        </Button>
+                    </Canvas>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Header Change">
+                <ScrollViewer HorizontalAlignment="Left" Height="336" Margin="0,-2,0,0" VerticalAlignment="Top" Width="374">
+                    <Canvas HorizontalAlignment="Left" Tag="Header" VerticalAlignment="Top" Width="351" Height="336">
+                        <TextBox HorizontalAlignment="Left" Tag="1" Height="30" TextWrapping="Wrap" Text="Old text" VerticalAlignment="Top" Width="158" TextChanged="OldHeader_TextChanged" Canvas.Top="10" Canvas.Left="6"/>
+                        <TextBox HorizontalAlignment="Left" Tag="1" Height="30" TextWrapping="Wrap" Text="New text" VerticalAlignment="Top" Width="158" TextChanged="NewHeader_TextChanged" Canvas.Left="183" Canvas.Top="10"/>
+                        <Button HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="91" Canvas.Top="55" Click="AddReplaceFields_Click" Canvas.Left="6">
+                            <Button.Content>
+                                <TextBlock TextWrapping="Wrap" Text="Add More Changes"/>
+                            </Button.Content>
+                        </Button>
+                    </Canvas>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Footer Change">
+                <ScrollViewer HorizontalAlignment="Left" Height="336" Margin="0,-2,0,0" VerticalAlignment="Top" Width="374">
+                    <Canvas HorizontalAlignment="Left" Tag="Footer" VerticalAlignment="Top" Width="351" Height="336">
+                        <TextBox HorizontalAlignment="Left" Tag="1" Height="30" TextWrapping="Wrap" Text="Old text" VerticalAlignment="Top" Width="158" TextChanged="OldFooter_TextChanged" Canvas.Top="10" Canvas.Left="6"/>
+                        <TextBox HorizontalAlignment="Left" Tag="1" Height="30" TextWrapping="Wrap" Text="New text" VerticalAlignment="Top" Width="158" TextChanged="NewFooter_TextChanged" Canvas.Left="183" Canvas.Top="10"/>
+                        <Button HorizontalAlignment="Left" Height="35" VerticalAlignment="Top" Width="91" Canvas.Top="55" Click="AddReplaceFields_Click" Canvas.Left="6">
+                            <Button.Content>
+                                <TextBlock TextWrapping="Wrap" Text="Add More Changes"/>
+                            </Button.Content>
+                        </Button>
+                    </Canvas>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Metadata Change">
+                <ScrollViewer HorizontalAlignment="Left" Height="336" Margin="0,-2,-1.6,0" VerticalAlignment="Top" Width="374">
+                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" Width="351" Height="371">
+                        <Label Content="Title:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Canvas.Top="10"/>
+                        <TextBox Name="title" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Canvas.Top="10" Canvas.Left="84" TextChanged="Metadata_TextChanged"/>
+                        <Label Content="Author:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Canvas.Top="59"/>
+                        <Label Content="Manager:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Canvas.Top="110"/>
+                        <Label Content="Company:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Canvas.Top="166"/>
+                        <Label Content="Subject:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Canvas.Top="219"/>
+                        <Label Content="Keywords:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Canvas.Top="270"/>
+                        <Label Content="Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Canvas.Top="322" RenderTransformOrigin="-0.57,2.746"/>
+                        <TextBox Name="creator" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Canvas.Top="55" Canvas.Left="84" TextChanged="Metadata_TextChanged"/>
+                        <TextBox Name="Manager" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Canvas.Top="106" Canvas.Left="84" TextChanged="Metadata_TextChanged"/>
+                        <TextBox Name="Company" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Canvas.Top="162" Canvas.Left="84" TextChanged="Metadata_TextChanged"/>
+                        <TextBox Name="subject" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Canvas.Top="215" Canvas.Left="84" TextChanged="Metadata_TextChanged"/>
+                        <TextBox Name="keywords" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Canvas.Top="266" Canvas.Left="84" TextChanged="Metadata_TextChanged"/>
+                        <TextBox Name="description" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="211" Canvas.Top="322" Canvas.Left="84" TextChanged="Metadata_TextChanged"/>
+                    </Canvas>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+        <Label Content="GMKK20&#xD;&#xA;" HorizontalAlignment="Left" Margin="1174,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.211,-0.292" Height="24" Width="83" FontWeight="Bold" FontStyle="Italic"/>
+    </Grid>
+</Window>
